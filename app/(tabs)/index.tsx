@@ -2,6 +2,7 @@ import {
   Image,
   StyleSheet,
   Text,
+  ScrollView,
   TextInput,
   TouchableOpacity,
   View,
@@ -14,7 +15,8 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import CategoryButton from "@/components/CategoryButton";
 import Listing from "@/components/Listing";
 import listingData  from "@/data/destinations.json";
-
+import GrupList from "@/components/GrupList";
+import groupData from "@/data/grup.json";
 
 export default function Page() {
   const headerHeight = useHeaderHeight();
@@ -68,6 +70,7 @@ export default function Page() {
         }}
       ></Stack.Screen>
       <View style={[styles.container, { paddingTop: headerHeight }]}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={styles.headingTex}>Home</Text>
         <View style={styles.search1}>
           <View style={styles.search2}>
@@ -83,7 +86,9 @@ export default function Page() {
           </TouchableOpacity>
         </View>
         <CategoryButton onCatChanged = {onCatChanged}/>
-        <Listing   listings = {listingData}/>
+        <Listing   listings = {listingData} category={category}/>
+        <GrupList data= {groupData}/>
+        </ScrollView>
       </View>
     </>
   );

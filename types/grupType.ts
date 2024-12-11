@@ -1,0 +1,33 @@
+export interface grupType  {
+    id: string;
+    name: string;
+    image: string;
+    description: string;
+    rating: number;
+    price: string;
+    duration: string;
+    location: string;
+    category: string;
+    reviews: number;
+    date: string;
+    time: string;
+    contact: string;
+    email: string;
+    phone: string;
+    website: string;
+    instagram: string;
+    facebook: string;
+    twitter: string;
+    youtube: string;
+    linkedin: string;
+    whatsapp: string;
+    instagram_followers: string;
+    facebook_followers: string;
+    twitter_followers: string;
+    youtube_subscribers: string;
+    linkedin_followers: string;
+    whatsapp_followers: string;
+    instagram_following: string;
+    facebook_following: string;
+
+  };
