@@ -14,19 +14,25 @@ import Colors from "@/constants/Colors";
 import { useHeaderHeight } from "@react-navigation/elements";
 import CategoryButton from "@/components/CategoryButton";
 import Listing from "@/components/Listing";
-import listingData  from "@/data/destinations.json";
+import listingData from "@/data/destinations.json";
 import GrupList from "@/components/GrupList";
 import groupData from "@/data/grup.json";
+import Search from "@/components/Search";
 
 export default function Page() {
   const headerHeight = useHeaderHeight();
-  const [category, setCategory] = useState("All")
-  const onCatChanged = (category : string) => {
-    console.log(category)
-    setCategory(category)
-    
+  const [category, setCategory] = useState("All");
+  const [searchText, setSearchText] = useState("");
 
-  } 
+  const handleTextChange = (text:string) => {
+    setSearchText(text);
+    //console.log(text);
+  };
+
+  const onCatChanged = (category: string) => {
+   // console.log(category);
+    setCategory(category);
+  };
   return (
     <>
       <Stack.Screen
@@ -70,24 +76,33 @@ export default function Page() {
         }}
       ></Stack.Screen>
       <View style={[styles.container, { paddingTop: headerHeight }]}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.headingTex}>Home</Text>
-        <View style={styles.search1}>
-          <View style={styles.search2}>
-            <Ionicons name="search" size={30} color={Colors.black} />
-            <TextInput placeholder="search" />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Text style={styles.headingTex}>Home</Text>
+          <View style={styles.search1}>
+            <View style={styles.search2}>
+              {searchText ? null : (
+                <Ionicons name="search" size={30} color={Colors.black} />
+              )}
+
+              <TextInput
+                placeholder="search"
+                value={searchText}
+                autoCapitalize="none"  
+                onChangeText={handleTextChange}
+              />
+            </View>
+            <TouchableOpacity onPress={() => {}} style={styles.filter}>
+              <Ionicons name="options" size={30} color={Colors.white} />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            onPress={() => {}}
-           
-            style={styles.filter}
-          >
-            <Ionicons name="options" size={30} color={Colors.white} />
-          </TouchableOpacity>
-        </View>
-        <CategoryButton onCatChanged = {onCatChanged}/>
-        <Listing   listings = {listingData} category={category}/>
-        <GrupList data= {groupData}/>
+          <CategoryButton onCatChanged={onCatChanged} />
+          {
+            !searchText ? (
+              <>  <Listing listings={listingData} category={category} />
+          <GrupList data={groupData} /></>):( <Search text={searchText}/>)
+
+          }
+         
         </ScrollView>
       </View>
     </>
@@ -116,7 +131,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10, // Adjust padding for better alignment
   },
-  
+
   search2: {
     flex: 1,
     flexDirection: "row",
@@ -129,13 +144,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10, // Adjust padding for better alignment
   },
-  filter:{
-backgroundColor:Colors.primaryColor,
-padding:12,
-borderRadius:10,
-marginLeft:10,
-marginTop: 10,
-
-},
-  
+  filter: {
+    backgroundColor: Colors.primaryColor,
+    padding: 12,
+    borderRadius: 10,
+    marginLeft: 10,
+    marginTop: 10,
+  },
 });
